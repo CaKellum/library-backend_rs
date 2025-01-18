@@ -1,0 +1,133 @@
+openapi: 3.0.0
+info: 
+  title: Kellum family library api
+  description: This is a simple backend to support a local website thta manages the Kellum family library
+  version: 0.0.1
+servers:
+  - url: http://localhost:8080/v1
+    description: development host
+
+paths:
+  /books:
+    get:
+      operationId: getBookList
+      summary: Gets list of books
+      description:  Gets the list of books based on specified parameters
+      parameters: 
+        - in: query
+          name: amnt
+          schema: 
+            type: integer
+            format: int64
+            default: 100
+          required: false
+        - in: query
+          name: term
+          schema: 
+            type: string
+            default: ""
+          required: false
+        - in: query
+          name: sortOrder
+          schema:
+            type: string
+            enum: [acs, dcs]
+            default: acs
+          required: false
+      responses:
+        # TODO: add all possible responses
+        "200":
+          description: ok
+          content: 
+            application/json:
+              schema: 
+                $ref: ""
+    post:
+      operationId: addNewBook
+      summary: Adds a new book to the library
+      description: adds a new book based off the body of the request
+      requestBody: 
+        description: required information for adding new book to library
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ""
+      responses:
+        "201":
+          description: ok response
+          content:
+            application/json:
+              schema:
+                $ref: ""
+  /books/{id}:
+    get:
+      operationId: getBookWithId
+      summary: gets full book with ID 
+      description: Gets the full book object from backend
+      parameters:
+        - in: path
+          name: id
+          schema: 
+            type: string
+            format: uuid
+          required: true
+      responses: 
+        "200":
+          description: ok response
+          content:
+            application/json:
+              schema:
+                $ref: ""
+    put:
+      operationId: updateBookWithId
+      summary: updates specified book
+      description: updates the specified book with the the request body information
+      parameters: 
+        - in: path
+          name: id 
+          schema: 
+            type: string
+            format: uuid
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ""
+      responses:
+        "200": 
+          description: ok response
+          content:
+            application/json:
+              schema:
+                $ref: ""
+  /books/{id}/checkout:
+    post:
+      operationId: checkoutBook
+      summary: updates the checkout 
+      description: updates the specified book to a reading or loaned status
+      parameters:
+        - in: path
+          name: id 
+          schema: 
+            type: string
+            format: uuid
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ""
+      responses:
+        "200":
+          description: book status was updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: ""
+  /verify:
+    post:
+      operationId: clientVerification
+      summary: provides 
+
